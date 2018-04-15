@@ -39,7 +39,7 @@ public class ProductManageController {
         return productService.all(pageNum, pageSize);
     }
 
-    @PostMapping("/save/")
+    @PostMapping("/save")
     @NeedLogin
     @ValidateFields
     public ServerResponse save(HttpServletRequest request,
@@ -48,7 +48,7 @@ public class ProductManageController {
         return productService.saveOrUpdate(product);
     }
 
-    @PostMapping("/upload/")
+    @PostMapping("/upload")
     @NeedLogin
     public ServerResponse upload(HttpServletRequest request,
                                  @RequestParam(value = "upload_file", required = false) MultipartFile multipartFile) throws IOException {
@@ -58,11 +58,9 @@ public class ProductManageController {
         return ServerResponse.SUCCESS(targetFileName);
     }
 
-    @RequestMapping(value = "/upload/", method = RequestMethod.GET)
-//    @NeedLogin
-    public String uploadGet() {
-//        ModelAndView modelAndView = new ModelAndView("upload");
-//        return modelAndView;
-        return "upload";
+    @RequestMapping(value = "/upload", method = RequestMethod.GET)
+    public ModelAndView uploadGet() {
+        ModelAndView modelAndView = new ModelAndView("default-upload");
+        return modelAndView;
     }
 }
