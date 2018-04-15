@@ -1,27 +1,30 @@
 package com.ye.goods.pojo;
 
-import javax.validation.constraints.NotEmpty;
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
+@JsonInclude(value = JsonInclude.Include.NON_NULL)
 public class User {
     private Integer id;
 
-    @NotEmpty(message = "用户名不能为空")
+    @NotNull(message = "用户名不能为空")
     private String username;
 
-    @NotEmpty(message = "密码不能为空")
+    @NotNull(message = "密码不能为空")
     private String password;
 
-    @NotEmpty(message = "邮箱不能为空")
+    @NotNull(message = "邮箱不能为空")
     private String email;
 
-    @NotEmpty(message = "电话号码不能为空")
+    @NotNull(message = "电话号码不能为空")
     private String phone;
 
-    @NotEmpty(message = "问题不能为空")
+    @NotNull(message = "问题不能为空")
     private String question;
 
-    @NotEmpty(message = "答案不能为空")
+    @NotNull(message = "答案不能为空")
     private String answer;
 
     private Integer role;

@@ -1,11 +1,20 @@
-package com.ye.goods.utils;
+package com.ye.goods.security;
+
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.security.MessageDigest;
 
-/**
- * Created by geely
- */
-public class MD5Util {
+public class CustomPasswordEncoding implements PasswordEncoder {
+    @Override
+    public String encode(CharSequence origin) {
+        origin = origin.toString() + "geelysdafaqj23ou89ZXcj@#$@#$#@KJdjklj;D../dSF.,";
+        return MD5Encode(origin.toString(), "utf-8");
+    }
+
+    @Override
+    public boolean matches(CharSequence charSequence, String s) {
+        return encode(charSequence).equals(s);
+    }
 
     private static String byteArrayToHexString(byte b[]) {
         StringBuffer resultSb = new StringBuffer();

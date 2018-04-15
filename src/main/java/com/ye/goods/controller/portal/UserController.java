@@ -7,23 +7,15 @@ import com.ye.goods.common.ServerResponse;
 import com.ye.goods.dao.UserMapper;
 import com.ye.goods.pojo.User;
 import com.ye.goods.service.IUserService;
-import com.ye.goods.utils.MD5Util;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.BindingResult;
+import org.springframework.security.core.Authentication;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
-import static com.ye.goods.common.Const.HEADER_STRING;
-import static com.ye.goods.common.Const.SECRET;
-import static com.ye.goods.common.Const.TOKEN_PREFIX;
 
 @RestController
-@RequestMapping("/user/")
+@RequestMapping("/users/")
 public class UserController {
 
     private IUserService userService;
@@ -37,27 +29,25 @@ public class UserController {
         this.userMapper = userMapper;
     }
 
-    @PostMapping("/login/")
-    @ValidateFields
-    public ServerResponse login(@Validated User user, BindingResult result, HttpSession session) {
-//        return userService.login(user.getUsername(), user.getPassword(), session);
-        return null;
+    @GetMapping("/login")
+    public ServerResponse login() {
+        return ServerResponse.ERROR_NEED_LOGIN();
     }
 
-    @GetMapping("/info/")
-    @NeedLogin
-    public ServerResponse info(HttpServletRequest request) {
-            String username = needLoginAop.getUsername();
-            return userService.info(username);
+    @GetMapping("/me")
+    public ServerResponse info(Authentication authentication) {
+         String loginUsername = ((org.springframework.security.core.userdetails.User)authentication.getPrincipal())
+                 .getUsername();
+
+            return ServerResponse.SUCCESS(userService.info(loginUsername));
     }
 
-    @PostMapping("/register/")
-    @ValidateFields
-    public ServerResponse register(@Validated User user, BindingResult result) {
+    @PostMapping("/register")
+    public ServerResponse register(@Validated User user) {
         return userService.register(user);
     }
 
-    @PutMapping("/update/")
+    @PutMapping("/update")
     @NeedLogin
     @ValidateFields
     public ServerResponse update(@Validated User user, HttpServletRequest request) {
