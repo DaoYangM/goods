@@ -7,7 +7,6 @@ import com.ye.goods.pojo.Product;
 import com.ye.goods.service.IFileService;
 import com.ye.goods.service.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;

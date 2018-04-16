@@ -41,6 +41,7 @@ public class CustomSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/users/login", "/users/register").permitAll()
+                .antMatchers("/users/me").hasRole("ADMIN")
                 .antMatchers("/manage/products/upload").permitAll()
                 .anyRequest()
                 .authenticated()

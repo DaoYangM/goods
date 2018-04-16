@@ -4,11 +4,15 @@ import com.ye.goods.dao.UserMapper;
 import com.ye.goods.pojo.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Component
 public class MyUserDetailsService implements UserDetailsService {
@@ -23,10 +27,15 @@ public class MyUserDetailsService implements UserDetailsService {
 
         User user =  userMapper.selectByUsername(s);
 
+        Set<GrantedAuthority> authorities = new HashSet<>();
+
         if (user.getRole().equals(0))
             accountNotLocked = false;
 
+        if (user.getRole().equals(1))
+            authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+
         return new org.springframework.security.core.userdetails.User(s, user.getPassword(), true,
-                true, true, accountNotLocked, AuthorityUtils.commaSeparatedStringToAuthorityList("ADMIN"));
+                true, true, accountNotLocked, authorities);
     }
 }
