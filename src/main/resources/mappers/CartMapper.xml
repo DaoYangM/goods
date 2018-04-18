@@ -116,7 +116,7 @@
     <include refid="Base_Column_List"/>
     FROM mmall_cart
     WHERE
-    user_id = #{ userId } AND product_id = #{ productId  }
+    user_id = #{ userId } AND product_id = #{ productId }
   </select>
 
   <select id="selectCartByUserId" parameterType="java.lang.Integer" resultMap="BaseResultMap" >
@@ -144,7 +144,7 @@
     </where>
   </delete>
 
-    <update id="selectAllOrUnselectAll" parameterType="map" >
+    <update id="selectAllOrUnSelectAll" parameterType="map" >
         UPDATE mmall_cart
         SET checked = #{ checked },
         update_time = now()

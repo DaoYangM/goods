@@ -10,6 +10,8 @@ public interface IUserService {
 
     boolean checkUsernameAndPassword(String username, String password);
 
+    ServerResponse updatePassword(String username, String oldPassword, String newPassword);
+
     ServerResponse info(String username);
 
     ServerResponse register(User user);

@@ -20,3 +20,10 @@ logging:
   level:
     com:
       ye.goods.dao: DEBUG
+
+com.ye:
+  ftp:
+    imageHost: 35.185.173.15
+    username: root
+    password: yedeyang
+    imgDirectory: img

@@ -1,31 +1,30 @@
 package com.ye.goods.controller.portal;
 
-import com.ye.goods.anno.NeedLogin;
-import com.ye.goods.anno.ValidateFields;
-import com.ye.goods.aop.NeedLoginAop;
 import com.ye.goods.common.ServerResponse;
 import com.ye.goods.dao.UserMapper;
 import com.ye.goods.pojo.User;
 import com.ye.goods.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.security.Principal;
 
 @RestController
 @RequestMapping("/users/")
 public class UserController {
 
     private IUserService userService;
-    private NeedLoginAop needLoginAop;
     private UserMapper userMapper;
 
     @Autowired
-    public UserController(IUserService userService, NeedLoginAop needLoginAop, UserMapper userMapper) {
+    public UserController(IUserService userService, UserMapper userMapper) {
         this.userService = userService;
-        this.needLoginAop = needLoginAop;
         this.userMapper = userMapper;
     }
 
@@ -33,31 +32,60 @@ public class UserController {
     public ServerResponse login() {
         return ServerResponse.ERROR_NEED_LOGIN();
     }
+//
+//    @PutMapping("/login")
+//    public ServerResponse login2() {
+//        return ServerResponse.ERROR_NEED_LOGIN();
+//    }
+
+    @GetMapping("/logout")
+    public ServerResponse logout(HttpServletRequest request, HttpServletResponse response) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        if (auth != null) {
+            new SecurityContextLogoutHandler().logout(request, response, auth);
+
+            return ServerResponse.SUCCESS("退出登录成功");
+        }
+        return ServerResponse.ERROR("退出登录失败");
+    }
 
     @GetMapping("/me")
-    public ServerResponse info(Authentication authentication) {
-         String loginUsername = ((org.springframework.security.core.userdetails.User)authentication.getPrincipal())
-                 .getUsername();
+    public ServerResponse info(Principal principal) {
+        String loginUsername = principal.getName();
 
             return ServerResponse.SUCCESS(userService.info(loginUsername));
     }
 
     @PostMapping("/register")
-    public ServerResponse register(@Validated User user) {
+    public ServerResponse registerUser(@Validated User user) {
         return userService.register(user);
     }
 
-    @PutMapping("/update")
-    @NeedLogin
-    @ValidateFields
-    public ServerResponse update(@Validated User user, HttpServletRequest request) {
-        String username = needLoginAop.getUsername();
+    @PutMapping("/update/detail")
+    public ServerResponse updateUser(Principal principal, @Validated User user) {
+        String username = principal.getName();
         User userOrigin = userMapper.selectByUsername(username);
         user.setUsername(username);
         user.setId(userOrigin.getId());
         user.setRole(userOrigin.getRole());
+        user.setPassword(null);
 
         return userService.update(user);
+    }
+
+    @PutMapping("/password")
+    public ServerResponse updatePassword(Principal principal, String oldPassword,
+                                          String newPassword) {
+        String username = principal.getName();
+
+        if (newPassword.length() < 8)
+            return ServerResponse.ERROR("密码长度小于8位");
+
+        if (oldPassword.equals(newPassword))
+            return ServerResponse.ERROR("旧密码与新密码相同");
+
+        return userService.updatePassword(username, oldPassword, newPassword);
     }
 }
 

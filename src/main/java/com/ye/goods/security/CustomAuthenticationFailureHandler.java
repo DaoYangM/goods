@@ -1,6 +1,7 @@
 package com.ye.goods.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ye.goods.common.ServerResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
@@ -28,7 +29,6 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
         httpServletResponse.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
         httpServletResponse.setContentType("application/json;charset=UTF-8");
 
-//        if (e.\.)ServerResponse.ERROR("用户名密码不正确")
-        httpServletResponse.getWriter().write(objectMapper.writeValueAsString(e.getMessage()));
+        httpServletResponse.getWriter().write(objectMapper.writeValueAsString(ServerResponse.ERROR(e.getMessage())));
     }
 }

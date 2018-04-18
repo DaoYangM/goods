@@ -1,6 +1,7 @@
 package com.ye.goods.dao;
 
 import com.ye.goods.pojo.Product;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -18,6 +19,10 @@ public interface ProductMapper {
     int updateByPrimaryKey(Product record);
 
     List<Product> getProductByKeywordCategory(String keyword, List<Integer> categoryIds);
+
+    List<Product> selectByProductNameAndCategoryId(@Param("productName") String productName,
+                                                   @Param("categoryId") Integer categoryId,
+                                                   @Param("productId") Integer productId);
 
     List<Product> all();
 }

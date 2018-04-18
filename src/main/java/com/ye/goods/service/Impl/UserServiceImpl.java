@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
 @Service
 public class UserServiceImpl implements IUserService {
 
-    private static UserMapper userMapper;
+    private UserMapper userMapper;
 
     @Autowired
     public void setUserMapper(UserMapper userMapper) {
@@ -40,6 +40,18 @@ public class UserServiceImpl implements IUserService {
             return true;
         } else
             return false;
+    }
+
+    @Override
+    public ServerResponse updatePassword(String username, String oldPassword, String newPassword) {
+        User user = userMapper.selectByUsername(username);
+        if (user.getPassword().equals(CustomPasswordEncoding.MD5EncodeUtf8(oldPassword))) {
+            user.setPassword(CustomPasswordEncoding.MD5EncodeUtf8(newPassword));
+            int result = userMapper.updateByPrimaryKeySelective(user);
+
+            return result == 1? ServerResponse.SUCCESS("密码更新成功"): ServerResponse.ERROR("密码更新失败");
+        }
+        return ServerResponse.ERROR("旧密码不正确");
     }
 
     @Override

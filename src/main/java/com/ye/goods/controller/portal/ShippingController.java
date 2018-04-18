@@ -29,7 +29,7 @@ public class ShippingController {
     @PostMapping("/save/")
     @NeedLogin
     @ValidateFields
-    public ServerResponse save(HttpServletRequest request, @Validated Shipping shipping, BindingResult result) {
+    public ServerResponse save(HttpServletRequest request, @Validated Shipping shipping) {
         String username = needLoginAop.getUsername();
         return shippingService.save(username, shipping);
     }

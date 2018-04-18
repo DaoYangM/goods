@@ -164,28 +164,8 @@
     FROM mmall_user WHERE username = #{username}
   </select>
 
-  <select id="selectByUsernameANDEmail" parameterType="map" resultMap="BaseResultMap">
-    SELECT
-    <include refid="Base_Column_List" />
-    FROM mmall_user
-    <where>
-      <if test="username != null">
-        AND username = #{username}
-      </if>
-      <if test="email != null">
-        AND email = #{email}
-      </if>
-    </where>
-  </select>
-
   <select id="checkUsername" parameterType="java.lang.String" resultType="int">
     SELECT COUNT(*) FROM mmall_user WHERE username = #{username};
-  </select>
-
-  <select id="selectLogin" parameterType="map" resultMap="BaseResultMap">
-    SELECT
-    <include refid="Base_Column_List"/>
-    FROM mmall_user WHERE username = #{username} AND password = #{password}
   </select>
 
   <select id="checkEmail" parameterType="String" resultType="int" >
@@ -199,19 +179,4 @@
     <select id="getAnswer" parameterType="String" resultType="String" >
     SELECT answer FROM mmall_user WHERE username = #{username};
     </select>
-
-  <select id="getUserByUsername" parameterType="java.lang.String" resultMap="BaseResultMap">
-    SELECT
-    <include refid="Base_Column_List"/>
-    FROM mmall_user WHERE username = #{username};
-  </select>
-
-  <update id="updateInformation" parameterType="com.ye.goods.pojo.User" >
-    update mmall_user
-    set
-      question = #{question,jdbcType=VARCHAR},
-      answer = #{answer,jdbcType=VARCHAR},
-      update_time = now()
-    where id = #{id,jdbcType=INTEGER}
-  </update>
 </mapper>

@@ -177,6 +177,12 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
+  <select id="all" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM mmall_product
+  </select>
+
   <select id="getProductList" resultMap="BaseResultMap">
     SELECT
     <include refid="Base_Column_List" />
@@ -216,4 +222,20 @@
           </if>
       </where>
   </select>
+    <select id="selectByProductNameAndCategoryId" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM mmall_product
+        <where>
+            <if test="categoryId != null">
+                AND category_id = #{categoryId}
+            </if>
+            <if test="productName != null ">
+                AND name LIKE #{productName}
+            </if>
+            <if test="productId != null ">
+                AND id = #{productId}
+            </if>
+        </where>
+    </select>
 </mapper>

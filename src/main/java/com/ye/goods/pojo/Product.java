@@ -1,27 +1,35 @@
 package com.ye.goods.pojo;
 
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Date;
 
 public class Product {
     private Integer id;
 
+    @NotNull(message = "categoryId不能为空")
     private Integer categoryId;
 
+    @NotNull(message = "name不能为空")
     private String name;
 
+    @NotNull(message = "subtitle不能为空")
     private String subtitle;
 
     private String mainImage;
 
     private String subImages;
 
+    @NotNull(message = "detail不能为空")
     private String detail;
 
+    @NotNull(message = "price不能为空")
     private BigDecimal price;
 
+    @NotNull(message = "stock不能为空")
     private Integer stock;
 
+    @NotNull(message = "status不能为空")
     private Integer status;
 
     private Date createTime;

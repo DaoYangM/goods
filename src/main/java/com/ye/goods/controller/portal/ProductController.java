@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/product/")
+@RequestMapping("/products/")
 public class ProductController {
 
     private IProductService productService;
@@ -20,12 +20,6 @@ public class ProductController {
     public ServerResponse detail(@PathVariable Integer productId) {
         return productId != null? productService.getDetail(productId): ServerResponse.ERROR_ILLEGAL_ARGUMENT();
     }
-
-//    @GetMapping("/category/{productId}/")
-//    public ServerResponse categoryList(@PathVariable Integer productId) {
-//        return productId != null? ServerResponse.SUCCESS(productService.getChildCategory(productId)):
-//                ServerResponse.ERROR_ILLEGAL_ARGUMENT();
-//    }
 
     @GetMapping
     public ServerResponse keyWordAndCategory(@RequestParam(value = "keyword", defaultValue = "") String keyword,
