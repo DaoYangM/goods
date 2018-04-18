@@ -14,4 +14,6 @@ public interface ICartService {
     ServerResponse selectAllOrUnSelectAll(String username, Integer code);
 
     ServerResponse selectOneOrUnSelectOne(String username, Integer code, Integer productId);
+
+    ServerResponse count(String username);
 }

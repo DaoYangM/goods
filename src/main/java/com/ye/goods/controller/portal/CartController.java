@@ -77,4 +77,10 @@ public class CartController {
         String username = principal.getName();
         return cartService.selectAllOrUnSelectAll(username, CartCheckedEnum.UNCHECKED.getCode());
     }
+
+    @GetMapping("/count")
+    public ServerResponse count(Principal principal) {
+        String username = principal.getName();
+        return cartService.count(username);
+    }
 }

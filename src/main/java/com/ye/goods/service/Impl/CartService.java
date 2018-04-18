@@ -24,7 +24,7 @@ import java.util.List;
 
 @Service
 @Slf4j
-public class CartService implements ICartService {
+public class  CartService implements ICartService {
 
     private CartMapper cartMapper;
 
@@ -155,6 +155,15 @@ public class CartService implements ICartService {
             return cartMapper.selectAllOrUnSelectAll(user.getId(), code, productId) > 0?
                     ServerResponse.SUCCESS(msg):
                     ServerResponse.ERROR_ILLEGAL_ARGUMENT();
+        }
+        return ServerResponse.ERROR_NEED_LOGIN();
+    }
+
+    @Override
+    public ServerResponse count(String username) {
+        User user = userMapper.selectByUsername(username);
+        if (user != null) {
+            return ServerResponse.SUCCESS(cartMapper.getCartProductCount(user.getId()));
         }
         return ServerResponse.ERROR_NEED_LOGIN();
     }
