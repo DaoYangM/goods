@@ -9,4 +9,6 @@ import org.springframework.stereotype.Component;
 @Data
 public class Properties {
     private FTPProperties ftp;
+
+    private AlipayProperties alipay;
 }

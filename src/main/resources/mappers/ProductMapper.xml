@@ -204,7 +204,7 @@
       </where>
   </select>
 
-  <select id="selectByNameAndCategoryIds" parameterType="map" resultMap="BaseResultMap" >
+  <select id="getProductByKeywordCategory" parameterType="map" resultMap="BaseResultMap" >
       SELECT
       <include refid="Base_Column_List" />
       FROM mmall_product
@@ -213,7 +213,7 @@
           <if test="productName != null">
               AND name LIKE '%${ productName }%' AND status = 1
           </if>
-          <if test="categoryIdList != null">
+          <if test="categoryIdList.size() > 0">
               AND category_id IN
               <foreach collection="categoryIdList" item="item" index="index" open="(" separator=", " close=")">
                 #{ item }

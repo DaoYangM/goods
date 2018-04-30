@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/products/")
+@RequestMapping("/products")
 public class ProductController {
 
     private IProductService productService;
@@ -16,7 +16,7 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @GetMapping("/{productId}/")
+    @GetMapping("/{productId}")
     public ServerResponse detail(@PathVariable Integer productId) {
         return productId != null? productService.getDetail(productId): ServerResponse.ERROR_ILLEGAL_ARGUMENT();
     }

@@ -1,5 +1,6 @@
 package com.ye.goods.security;
 
+import com.ye.goods.common.exception.UsernamePasswordException;
 import com.ye.goods.dao.UserMapper;
 import com.ye.goods.pojo.User;
 
@@ -26,6 +27,10 @@ public class MyUserDetailsService implements UserDetailsService {
         boolean accountNotLocked = true;
 
         User user =  userMapper.selectByUsername(s);
+
+        if (user == null){
+            throw new UsernamePasswordException("用户名或密码不正确");
+        }
 
         Set<GrantedAuthority> authorities = new HashSet<>();
 

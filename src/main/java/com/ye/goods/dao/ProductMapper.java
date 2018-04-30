@@ -18,7 +18,8 @@ public interface ProductMapper {
 
     int updateByPrimaryKey(Product record);
 
-    List<Product> getProductByKeywordCategory(String keyword, List<Integer> categoryIds);
+    List<Product> getProductByKeywordCategory(@Param("productName") String productName,
+                                              @Param("categoryIdList") List<Integer> categoryIdList);
 
     List<Product> selectByProductNameAndCategoryId(@Param("productName") String productName,
                                                    @Param("categoryId") Integer categoryId,

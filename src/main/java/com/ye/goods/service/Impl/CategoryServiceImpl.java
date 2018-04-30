@@ -22,7 +22,7 @@ public class CategoryServiceImpl implements ICategoryService {
 
     @Override
     public Set<Category> getChildCategory(Integer categoryId) {
-        List<Category> categoryList = categoryMapper.getProductParentId(categoryId);
+        List<Category> categoryList = categoryMapper.getChildrenParallelCategory(categoryId);
         Set<Category> categorySet = new HashSet<>();
         for (Category category: categoryList) {
             categorySet = getDeepenChildCategory(categorySet, category.getId());
@@ -35,7 +35,7 @@ public class CategoryServiceImpl implements ICategoryService {
         Category category = categoryMapper.selectByPrimaryKey(categoryId);
         if (category != null) {
             categorySet.add(category);
-            List<Category> categoryList1 = categoryMapper.getProductParentId(category.getId());
+            List<Category> categoryList1 = categoryMapper.getChildrenParallelCategory(category.getId());
             for (Category category1: categoryList1) {
                 getDeepenChildCategory(categorySet, category1.getId());
             }

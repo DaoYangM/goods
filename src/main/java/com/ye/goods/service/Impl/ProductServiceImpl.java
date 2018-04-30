@@ -50,12 +50,13 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
-    public ServerResponse<PageInfo> getProductByKeywordCategory(String keyword, Integer categoryId,
+    public ServerResponse<PageInfo<Product>> getProductByKeywordCategory(String keyword, Integer categoryId,
                                                                 Integer pageNum, Integer pageSize, String orderBy) {
-        List<Category> categoryList = categoryMapper.getProductParentId(categoryId);
+        List<Category> categoryList;
         List<Integer> categoryIds = new ArrayList<>();
 
         if (categoryId != null) {
+            categoryList = categoryMapper.getChildrenParallelCategory(categoryId);
             for (Category category : categoryList) {
                 categoryIds.add(category.getId());
             }
@@ -87,7 +88,7 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
-    public ServerResponse<PageInfo> all(Integer pageNum, Integer pageSize) {
+    public ServerResponse<PageInfo<Product>> all(Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         List<Product> productList = productMapper.all();
 

@@ -1,6 +1,7 @@
 package com.ye.goods.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ye.goods.common.ServerResponse;
 import com.ye.goods.dao.UserMapper;
 import com.ye.goods.pojo.User;
 import com.ye.goods.service.IUserService;
@@ -34,6 +35,6 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
         user.setPassword(null);
 
         httpServletResponse.setContentType("application/json;charset=UTF-8");
-        httpServletResponse.getWriter().write(objectMapper.writeValueAsString(user));
+        httpServletResponse.getWriter().write(objectMapper.writeValueAsString(ServerResponse.SUCCESS(user)));
     }
 }

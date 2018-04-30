@@ -26,25 +26,19 @@ public class ShippingController {
         this.shippingService = shippingService;
     }
 
-    @PostMapping("/save/")
-    @NeedLogin
-    @ValidateFields
+    @PostMapping("/save")
     public ServerResponse save(HttpServletRequest request, @Validated Shipping shipping) {
         String username = needLoginAop.getUsername();
         return shippingService.save(username, shipping);
     }
 
     @GetMapping
-    @NeedLogin
-    @ValidateFields
     public ServerResponse all(HttpServletRequest request) {
         String username = needLoginAop.getUsername();
         return shippingService.all(username);
     }
 
-    @DeleteMapping("/{shippingId}/")
-    @NeedLogin
-    @ValidateFields
+    @DeleteMapping("/{shippingId}")
     public ServerResponse delete(HttpServletRequest request, @PathVariable Integer shippingId) {
         String username = needLoginAop.getUsername();
         return shippingService.delete(username, shippingId);

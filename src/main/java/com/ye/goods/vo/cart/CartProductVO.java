@@ -20,6 +20,8 @@ public class CartProductVO {
 
     private Integer quantity;
 
+    private Integer stock;
+
     private BigDecimal productPrice;
 
     private Integer productStatus;

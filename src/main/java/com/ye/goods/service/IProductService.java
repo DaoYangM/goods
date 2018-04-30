@@ -8,13 +8,13 @@ public interface IProductService {
 
     ServerResponse getDetail(Integer id);
 
-    ServerResponse<PageInfo> getProductByKeywordCategory(
+    ServerResponse<PageInfo<Product>> getProductByKeywordCategory(
             String keyword, Integer categoryId, Integer pageNum, Integer pageSize,String orderBy
     );
 
     ServerResponse saveOrUpdate(Product product);
 
-    ServerResponse<PageInfo> all(Integer pageNum, Integer pageSize);
+    ServerResponse<PageInfo<Product>> all(Integer pageNum, Integer pageSize);
 
     ServerResponse updateStatus(Integer productId, Integer status);
 

@@ -163,4 +163,41 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="getByOrderNoAndUserId" parameterType="map" resultMap="BaseResultMap" >
+    SELECT
+    <include refid="Base_Column_List" />
+    from mmall_order_item
+    where order_no = #{orderNo} AND user_id = #{userId}
+  </select>
+
+  <insert id="batchInsert" parameterType="java.util.List">
+      INSERT INTO mmall_order_item ( user_id, order_no,
+      product_id, product_name, product_image,
+      current_unit_price, quantity, total_price,
+      create_time, update_time)
+      VALUES
+      <foreach collection="orderItemList" separator="," item="item" >
+        ( #{item.userId,jdbcType=INTEGER}, #{item.orderNo,jdbcType=BIGINT},
+          #{item.productId,jdbcType=INTEGER}, #{item.productName,jdbcType=VARCHAR}, #{item.productImage,jdbcType=VARCHAR},
+          #{item.currentUnitPrice,jdbcType=DECIMAL}, #{item.quantity,jdbcType=INTEGER}, #{item.totalPrice,jdbcType=DECIMAL},
+          now(), now())
+      </foreach>
+
+  </insert>
+
+  <select id="selectByOrderNo" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM mmall_order_item
+    WHERE order_no = #{orderNo};
+  </select>
+
+  <select id="findByProductName" parameterType="java.lang.String" resultType="java.lang.Long">
+    <bind name="pattern" value="'%' + productName + '%'" />
+    SELECT
+    order_no
+    FROM mmall_order_item
+    WHERE product_name LIKE #{pattern}
+  </select>
 </mapper>

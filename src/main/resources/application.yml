@@ -27,3 +27,5 @@ com.ye:
     username: root
     password: yedeyang
     imgDirectory: img
+  alipay:
+    callbackUrl: http://w88pj5.natappfree.cc/order/alipay/callback

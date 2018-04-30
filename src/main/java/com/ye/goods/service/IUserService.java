@@ -17,4 +17,6 @@ public interface IUserService {
     ServerResponse register(User user);
 
     ServerResponse update(User user);
+
+    ServerResponse checkUsername(String username);
 }

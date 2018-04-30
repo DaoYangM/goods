@@ -2,7 +2,7 @@ package com.ye.goods.common;
 
 public enum ResponseCode {
     SUCCESS(0, "SUCCESS"),
-    ERROR(5, "ERROR"),
+    ERROR(1, "ERROR"),
     NEED_LOGIN(10, "NEED_LOGIN"),
     NEED_ADMIN(20, "NEED_ADMIN"),
     ILLEGAL_ARGUMENT(2, "ILLEGAL_ARGUMENT");

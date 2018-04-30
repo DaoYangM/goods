@@ -2,6 +2,7 @@ package com.ye.goods.dao;
 
 import com.ye.goods.common.ServerResponse;
 import com.ye.goods.pojo.Shipping;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -20,5 +21,7 @@ public interface ShippingMapper {
 
     int deleteByUserIdAndShippingId(Integer id, Integer shippingId);
 
-    List<Shipping> all(Integer id);
+    Shipping selectByUserIdAndShippingId(@Param("userId") Integer userId,
+                                       @Param("shippingId") Integer shippingId);
+    List<Shipping> all(Integer userId);
 }

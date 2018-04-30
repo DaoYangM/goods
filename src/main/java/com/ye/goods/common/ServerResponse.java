@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ServerResponse<T> {
-    private int code;
+    private Integer code;
     private String desc;
     private T target;
 
@@ -30,6 +30,10 @@ public class ServerResponse<T> {
 
     public void setTarget(T target) {
         this.target = target;
+    }
+
+    public boolean isSuccess() {
+        return this.code.equals(ResponseCode.SUCCESS.getCode());
     }
 
     private ServerResponse(int code, String desc) {

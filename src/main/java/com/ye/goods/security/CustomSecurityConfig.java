@@ -40,8 +40,9 @@ public class CustomSecurityConfig extends WebSecurityConfigurerAdapter {
                 .failureHandler(authenticationFailureHandler)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/users/login", "/users/register").permitAll()
-                .antMatchers("/manage/products/*").hasRole("ADMIN")
+                .antMatchers("/users/login", "/users/logout", "/users/register", "/products", "/products/*",
+                        "/users/check/username", "/order/alipay/callback").permitAll()
+                .antMatchers("/manage/*").hasRole("ADMIN")
 //                .antMatchers("/manage/products/upload").permitAll()
                 .anyRequest()
                 .authenticated()

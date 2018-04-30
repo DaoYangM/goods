@@ -81,4 +81,10 @@ public class UserServiceImpl implements IUserService {
         return userMapper.updateByPrimaryKeySelective(user) == 1?
                 ServerResponse.SUCCESS(true): ServerResponse.ERROR("Register failed");
     }
+
+    @Override
+    public ServerResponse checkUsername(String username) {
+        return userMapper.checkUsername(username) > 0? ServerResponse.ERROR("用户已经注册"):
+                ServerResponse.SUCCESS(null);
+    }
 }

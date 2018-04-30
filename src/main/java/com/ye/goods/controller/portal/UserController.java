@@ -4,6 +4,7 @@ import com.ye.goods.common.ServerResponse;
 import com.ye.goods.dao.UserMapper;
 import com.ye.goods.pojo.User;
 import com.ye.goods.service.IUserService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -55,6 +56,13 @@ public class UserController {
         String loginUsername = principal.getName();
 
             return ServerResponse.SUCCESS(userService.info(loginUsername));
+    }
+
+    @PostMapping("/check/username")
+    public ServerResponse checkUsername(String username) {
+        if (StringUtils.isBlank(username))
+            return ServerResponse.ERROR("用户名不能为空");
+        return userService.checkUsername(username);
     }
 
     @PostMapping("/register")

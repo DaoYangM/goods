@@ -167,13 +167,6 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
-  <select id="selectShippingByUserId" parameterType="int" resultMap="BaseResultMap" >
-    SELECT
-    <include refid="Base_Column_List" />
-    FROM mmall_shipping
-    WHERE user_id = #{ userId };
-  </select>
-
   <delete id="deleteByUserIdAndShippingId" parameterType="map" >
     DELETE FROM mmall_shipping WHERE user_id = #{userId} AND id = #{shippingId}
   </delete>
@@ -184,4 +177,13 @@
     FROM mmall_shipping
     WHERE id =#{shippingId} AND user_id = #{userId}
   </select>
+
+  <select id="all" resultMap="BaseResultMap">
+      SELECT
+    <include refid="Base_Column_List" />
+    FROM mmall_shipping
+    WHERE user_id =#{userId}
+  </select>
+
+
 </mapper>
