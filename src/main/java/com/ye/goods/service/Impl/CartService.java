@@ -50,7 +50,7 @@ public class  CartService implements ICartService {
             if (cartExisted == null) {
                     Cart cart = new Cart();
 
-                    if (!decreaseQuantity(product, count))
+                    if (decreaseQuantity(product, count))
                         return ServerResponse.ERROR("库存不足");
 
                     cart.setUserId(user.getId());
@@ -65,7 +65,7 @@ public class  CartService implements ICartService {
             } else {
                 Cart cart = cartMapper.selectCartByUserIdAndProductId(user.getId(), product.getId());
                 int countUpdate = cart.getQuantity() + count;
-                if (!decreaseQuantity(product, countUpdate))
+                if (decreaseQuantity(product, countUpdate))
                     return ServerResponse.ERROR("库存不足");
 
                 cart.setChecked(CartCheckedEnum.CHECKED.getCode());
@@ -98,7 +98,7 @@ public class  CartService implements ICartService {
         if (user != null && product != null) {
             Cart cart = cartMapper.selectCartByUserIdAndProductId(user.getId(), product.getId());
 
-            if (!decreaseQuantity(product, count))
+            if (decreaseQuantity(product, count))
                 return ServerResponse.ERROR("库存不足");
 
             cart.setUserId(user.getId());
@@ -179,7 +179,7 @@ public class  CartService implements ICartService {
         List<CartProductVO> productVOList = new ArrayList<>();
 
         for (Cart cart: cartList) {
-            BigDecimal productTotalPrice = new BigDecimal("0");
+            BigDecimal productTotalPrice;
 
             Product product = productMapper.selectByPrimaryKey(cart.getProductId());
 
@@ -192,6 +192,7 @@ public class  CartService implements ICartService {
             cartProductVO.setProductPrice(product.getPrice());
             cartProductVO.setProductSubtitle(product.getSubtitle());
             cartProductVO.setQuantity(cart.getQuantity());
+            cartProductVO.setStock(product.getStock());
 
             productTotalPrice = BigDecimalUtil.mul(cart.getQuantity(), product.getPrice().doubleValue());
 
@@ -219,12 +220,12 @@ public class  CartService implements ICartService {
 
         if (productQuantity < count) {
             log.error("删除库存失败");
-            return false;
+            return true;
         }
 
         product.setStock(product.getStock() - count);
         productMapper.updateByPrimaryKeySelective(product);
         log.info("删除库存成功");
-        return true;
+        return false;
     }
 }
