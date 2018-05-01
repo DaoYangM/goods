@@ -44,8 +44,7 @@ import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Collectors;
 
-@Service
-
+@Service("orderService")
 public class OrderServiceImpl implements IOrderService {
 
     private static Logger log = LoggerFactory.getLogger(OrderServiceImpl.class);

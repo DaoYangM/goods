@@ -2,7 +2,7 @@ package com.ye.goods.controller.backend;
 
 import com.ye.goods.common.ResponseCode;
 import com.ye.goods.common.ServerResponse;
-import com.ye.goods.service.Impl.OrderServiceImpl;
+import com.ye.goods.service.IOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/manage/order")
 public class OrderManageController {
 
-    private OrderServiceImpl orderService;
+    private IOrderService orderService;
 
     @Autowired
-    public void setOrderService(OrderServiceImpl orderService) {
+    public void setOrderService(IOrderService orderService) {
         this.orderService = orderService;
     }
 
