@@ -31,7 +31,7 @@ public class UserController {
 
     @GetMapping("/login")
     public ServerResponse login() {
-        return ServerResponse.ERROR_NEED_LOGIN();
+        return ServerResponse.ERROR("TOMCAT_2_NEED_LOGIN");
     }
 //
 //    @PutMapping("/login")
